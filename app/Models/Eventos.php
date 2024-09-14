@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Eventos extends Model
 {
-
-
     use HasFactory;
-    protected $primaryKey = 'idEvento';
+    protected $primaryKey = 'idEventos';
+
     protected $fillable = [
-            'nomeEvento',
-            'dataEvento',
-            'localEvento',
-            'imgEvento'
+        'nomeEvento',
+        'dateEvent',
+        'localEvento',
+        'imgEvento'
     ];
+
 }
