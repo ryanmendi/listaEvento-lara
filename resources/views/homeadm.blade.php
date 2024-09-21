@@ -1,9 +1,8 @@
 @extends('layout')
 @section('content')
 
-
 <figure>
-    <img src="">
+    <img src="assets/images.png"/>
 </figure>
 
 @endsection
