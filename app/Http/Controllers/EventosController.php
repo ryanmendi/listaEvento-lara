@@ -5,76 +5,76 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Eventos;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\support\facades\Validatir;
-
+use Illuminate\Support\Facades\Validator;
 
 class EventosController extends Controller
 {
-    //mostrar home
+    // PARA MOSTRAR TELA ADMINISTRATIVA
 
     public function MostrarHome()
     {
         return view('homeadm');
     }
 
-    //cadastro evento
+    //para mostrar tela de cadastro de evento
 
     public function MostrarCadastroEvento()
     {
         return view('cadastroevento');
     }
 
-    //salvar arquivos na tabela eventos
-
-    public function CadastrarEventos (Request $request)
+    //para salvar os registros na tabela evento
+    public function CadastroEventos(Request $request)
     {
-        $registros = $ $request->validade([
-            'nomeEvento'=>'string|required',
-            'dataEvento'=>'date|required',
-            'localEvento'=>'string|required',
-            'imgEvento'=>'string|required'
+        $registros = $request->validator([
+            'nomeEvento' => 'string|required',
+            'dataEvento' => 'date' | 'required',
+            'localEvento' => 'string' | 'required',
+            'imgEvento' => 'string' | 'required'
         ]);
 
-        Eventos::create($registros);
+
+        tblEvento::create($registros);
         return Redirect::route('home-adm');
     }
 
-    // delete registro tabela evento
+
+    //para apagar os registros na tabela de eventos
     public function Destroy(Eventos $id)
     {
         $id->delete();
         return Redirect::route('home-adm');
     }
 
-    //alterar registros tabela evento
-    public function Update (Eventos $id, Request $request)
+    // Alterar registros na tabela de eventos
+
+    public function Update(Eventos $id, Request $request)
     {
-        $registros = $ $request->validade([
-            'nomeEvento'=>'string|required',
-            'dataEvento'=>'date|required',
-            'localEvento'=>'string|required',
-            'imgEvento'=>'string|required'
+        $registros = $request->validator([
+            'nomeEvento' => 'string|required',
+            'dataEvento' => 'date' | 'required',
+            'localEvento' => 'string' | 'required',
+            'imgEvento' => 'string' | 'required'
         ]);
         $id->fill($registros);
         $id->save();
 
-        return Redirect::route('home-adm');
+        return Redirect::route("home-adm");
     }
 
-    //mostrar os eventos pelo codigo
-    public function MostrarEventoCodigo(Evento $id)
-    {
-        return view ('alteraevento', ['registrosEvento'=>$id]);
+    //Para mostrar somente os eventos por código 
+    public function MostrarEventoCodigo(Eventos $id){
+        return view('altera-evento',['registrosEventos'=>$id]);
     }
 
-    // buscar evento pelo nome
-    public function MostrarEventoNome(Request $request)
-    {
+    // Para buscar os eventos por nome
+    public function MostrarEventoNome(Request $request){
         $registros = Eventos::query();
         $registros->when($request->nomeEvento,function($query,$valor){
-            $query->where('nomeEvento','like','%'.$valor.'%');
+            $query->where('nomeEvento','like','%',$valor,'%');
         });
         $todosRegistros = $registros->get();
-        return view ('listaevento',['registrosEvento'=>$todosRegistros]);
+        return view('listaEventos',['registrosEventos'=>$todosRegistros]);
     }
 }
+

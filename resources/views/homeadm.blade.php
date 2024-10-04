@@ -2,7 +2,6 @@
 @section('content')
 
 <figure>
-    <img src="assets/images.png"/>
+    <img src=""/>
 </figure>
-
 @endsection
